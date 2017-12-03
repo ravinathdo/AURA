@@ -10,7 +10,7 @@ function getDBConnection() {
     /**/
     $servername = "localhost";
     $username = "root";
-    $password = "123";
+    $password = "root";
     $db = "aura_db";
 // Create connection
     $conn = mysqli_connect($servername, $username, $password, $db);
