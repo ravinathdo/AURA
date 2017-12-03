@@ -152,7 +152,7 @@ values ('".$_SESSION['ssn_user']['id']."',
                     }
                     ?>
 
-                    <!--<input type="button" onclick="printDiv('PRINT')" value="print" />-->
+                    <input type="button" onclick="printDiv('PRINT')" value="print" />
                 </div>
                 <div class="col-md-4"></div>
             </div>
