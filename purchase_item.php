@@ -135,7 +135,7 @@
                                             <td>price</td>
                                             <td><input type="number" name="price" value="<?= $row['price']; ?>" required="" readonly="" /> </td>
                                         <input type="hidden" name="price" value="<?= $row['price']; ?>" />
-                                        <input type="hidden" name="price" value="<?= $row['available_qty']; ?>" />
+                                        <input type="hidden" name="available_qty" value="<?= $row['available_qty']; ?>" />
 
                                         </tr>
                                         <tr>

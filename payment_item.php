@@ -118,7 +118,7 @@ values ('".$_SESSION['ssn_user']['id']."',
                         //update availabe 
                         $balance = $_POST['available_qty'] - $_POST['qty'];
                         $upQuery = " UPDATE aura_item SET available_qty = '".$balance."' WHERE id = ".$_POST['id'];
-                        setUpdate($sql, FALSE);
+                        setUpdate($upQuery, FALSE);
                         
                         ?>
 
@@ -152,7 +152,7 @@ values ('".$_SESSION['ssn_user']['id']."',
                     }
                     ?>
 
-                    <input type="button" onclick="printDiv('PRINT')" value="print" />
+                    <!--<input type="button" onclick="printDiv('PRINT')" value="print" />-->
                 </div>
                 <div class="col-md-4"></div>
             </div>
