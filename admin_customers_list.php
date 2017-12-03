@@ -39,25 +39,6 @@
         <![endif]-->
     </head>
     <body>
-        <?php
-        include './DB.php';
-        if (isset($_POST['btnLogin'])) {
-
-            $sql = "select * from aura_user where email = '" . $_POST['email'] . "' and pword = password('" . $_POST['pword'] . "')";
-            //echo $sql;
-            $result = getData($sql);
-            if ($result) {
-                if (mysqli_num_rows($result) > 0) {
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        $_SESSION['ssn_user'] = $row;
-                    }
-                    header("Location:home.php");
-                }
-            } else {
-                echo '<p class="bg-danger"><b>Invalid Username or Password</b></p>';
-            }
-        }
-        ?>
         <!-- banner -->
         <div class="bannerx" id="home">
             <div class="w3-header-bottom">
@@ -81,7 +62,13 @@
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav">
-                                <?php include '_menu_common.php'; ?>
+                                <?php
+                                if ($_SESSION['ssn_user']['role'] == 'CUSTOMER') {
+                                    include './_menu_customer.php';
+                                } else if ($_SESSION['ssn_user']['role'] == 'ADMIN') {
+                                    include './_menu_admin.php';
+                                }
+                                ?>
                             </ul>	
                             <div class="clearfix"> </div>
                         </div>	
@@ -89,8 +76,7 @@
                 </div>
                 <div class="agileinfo-social-grids">
                     <ul>
-                        <li><a href="registration.php"><i class="fa fa-user"></i></a></li>
-                        <li><a href="login.php"><i class="fa fa-arrow-right"></i></a></li>
+                        <?php include './_right.php'; ?>
                     </ul>
                 </div>
                 <div class="clearfix"> </div>
@@ -107,26 +93,51 @@
 
         <div class="container">
             <div class="row">
-                <div class="col-md-4"></div>
-                <div class="col-md-4">
-                    <br>
-                    <br>
-                    <form action="login.php" method="post">
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Email</label>
-                            <input type="email"  name="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">Password</label>
-                            <input type="password" name="pword" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword1"></label>
-                            <button type="submit" name="btnLogin" class="btn btn-primary">Login</button>
-                        </div>
-                    </form>
+                <h2>Customer</h2>
+                <div class="col-md-9">
+                    <?php
+                    include './DB.php';
+                  
+                    ?>
+
+                    <table id="example" class="display" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Gender</th>
+                                <th>Email</th>
+                                <th>Mobile</th>
+                                <th>Reg Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $sql = " SELECT * FROM aura_user WHERE role = 'CUSTOMER' ";
+                            $resultx = getData($sql);
+                            if ($resultx != FALSE) {
+                                while ($row = mysqli_fetch_assoc($resultx)) {
+                                    ?>
+
+                                    <tr>
+                                        <td><?= $row['fname']; ?></td>
+                                        <td><?= $row['lname']; ?></td>
+                                        <td><?= $row['gender']; ?></td>
+                                        <td><?= $row['email']; ?></td>
+                                        <td><?= $row['mobile']; ?></td>
+                                        <td><?= $row['regdatetime']; ?></td>
+                                    </tr>
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+
+
+
                 </div>
-                <div class="col-md-4"></div>
+                <div class="col-md-3"></div>
             </div>
         </div>
 
@@ -167,6 +178,14 @@
 
         <?php include './_footer.php'; ?>
         <!-- //footer -->
+
+        <link href="css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+        <script src="js/jquery.dataTables.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#example').DataTable();
+            });
+        </script>
 
         <script src="js/responsiveslides.min.js"></script>
         <script>

@@ -1,13 +1,8 @@
-<!--A Design by W3layouts
-Author: W3layout
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Wear a Fashion Category Bootstrap Responsive Website Template | Home :: w3layouts</title>
+<title>AURA</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
 <meta name="keywords" content="Wear Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
@@ -28,10 +23,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- font-awesome icons -->
 <link href="css/font-awesome.css" rel="stylesheet"> 
 <!-- //font-awesome icons -->
-<!-- font -->
-<link href="//fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-<link href="//fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
-<!-- //font -->
+
 <script src="js/jquery-1.11.1.min.js"></script>
 <script src="js/bootstrap.js"></script>
 <script type="text/javascript">
@@ -52,7 +44,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<div class="w3-header-bottom">
 			<div class="w3layouts-logo">
 				<h1>
-					<a href="index.html">Wear </a>
+					<a href="index.html">AURA</a>
 					<i class="fa fa-shopping-bag" aria-hidden="true"></i>
 					
 				</h1>
@@ -70,7 +62,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<!-- Collect the nav links, forms, and other content for toggling -->
 							<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 								<ul class="nav navbar-nav">
-									<li class="first-list"><a class="active" href="index.html">Home</a></li>
+									<li class="first-list"><a class="active" href="index.php">Home</a></li>
 									<li><a href="#about" class="scroll">About</a></li>
 									<li><a href="#services" class="scroll">Services</a></li>
 									<li><a href="#portfolio" class="scroll">Portfolio</a></li>
@@ -84,9 +76,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="agileinfo-social-grids">
 				<ul>
 					<li><a href="#"><i class="fa fa-facebook"></i></a></li>
-					<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-					<li><a href="#"><i class="fa fa-rss"></i></a></li>
-					<li><a href="#"><i class="fa fa-vk"></i></a></li>
+                                        <li><a href="registration.php"><i class="fa fa-user"></i></a></li>
+                                        <li><a href="login.php"><i class="fa fa-arrow-right"></i></a></li>
 				</ul>
 			</div>
 			<div class="clearfix"> </div>
@@ -523,29 +514,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 <!-- footer -->
 
-<div class="footer-bot wow fadeInRight animated" data-wow-delay=".5s">
-	<div class="container">
-			<div class="logo2">
-				<h3><a href="index.html">Wear</a></h3>
-			</div>
-			<div class="ftr-menu">
-				 <ul>
-					<li><a class="scroll" href="#home">Home </a></li>
-					<li><a class="scroll" href="#about">About</a></li>
-					<li><a class="scroll" href="#services">Services</a></li>
-					<li><a class="scroll" href="#models">models</a></li>
-					<li><a class="scroll" href="#testimonials">Testimonials</a></li>
-					<li><a class="scroll" href="#contact">Contact</a></li>
-				 </ul>
-			</div>
-			<div class="clearfix"></div>
-	</div>
-</div>
-<div class="copy-right wow fadeInLeft animated" data-wow-delay=".5s">
-	<div class="container">
-			<p> &copy; 2017 Wear . All Rights Reserved | Design by  <a href="http://w3layouts.com/"> W3layouts</a></p>
-	</div>
-</div>
+<?php include './_footer.php'; ?>
 <!-- //footer -->
 
 	<script src="js/responsiveslides.min.js"></script>

@@ -76,10 +76,9 @@
                 </div>
                 <div class="agileinfo-social-grids">
                     <ul>
-                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa fa-rss"></i></a></li>
-                        <li><a href="#"><i class="fa fa-vk"></i></a></li>
+                        <li><a href="#"><i class="fa fa-user"></i><?= $_SESSION['ssn_user']['fname']; ?></a></li>
+                        <li><a href="change_password.php"><i class="fa fa-lock"></i></a></li>
+                        <li><a href="logout.php"><i class="fa fa-arrow-left"></i></a></li>
                     </ul>
                 </div>
                 <div class="clearfix"> </div>
@@ -136,6 +135,7 @@
                                             <td>price</td>
                                             <td><input type="number" name="price" value="<?= $row['price']; ?>" required="" readonly="" /> </td>
                                         <input type="hidden" name="price" value="<?= $row['price']; ?>" />
+                                        <input type="hidden" name="price" value="<?= $row['available_qty']; ?>" />
 
                                         </tr>
                                         <tr>

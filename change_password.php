@@ -39,25 +39,6 @@
         <![endif]-->
     </head>
     <body>
-        <?php
-        include './DB.php';
-        if (isset($_POST['btnLogin'])) {
-
-            $sql = "select * from aura_user where email = '" . $_POST['email'] . "' and pword = password('" . $_POST['pword'] . "')";
-            //echo $sql;
-            $result = getData($sql);
-            if ($result) {
-                if (mysqli_num_rows($result) > 0) {
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        $_SESSION['ssn_user'] = $row;
-                    }
-                    header("Location:home.php");
-                }
-            } else {
-                echo '<p class="bg-danger"><b>Invalid Username or Password</b></p>';
-            }
-        }
-        ?>
         <!-- banner -->
         <div class="bannerx" id="home">
             <div class="w3-header-bottom">
@@ -81,7 +62,13 @@
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav">
-                                <?php include '_menu_common.php'; ?>
+                                <?php
+                                if ($_SESSION['ssn_user']['role'] == 'CUSTOMER') {
+                                    include './_menu_customer.php';
+                                } else if ($_SESSION['ssn_user']['role'] == 'ADMIN') {
+                                    include './_menu_admin.php';
+                                }
+                                ?>
                             </ul>	
                             <div class="clearfix"> </div>
                         </div>	
@@ -89,8 +76,7 @@
                 </div>
                 <div class="agileinfo-social-grids">
                     <ul>
-                        <li><a href="registration.php"><i class="fa fa-user"></i></a></li>
-                        <li><a href="login.php"><i class="fa fa-arrow-right"></i></a></li>
+                        <?php include './_right.php';?>
                     </ul>
                 </div>
                 <div class="clearfix"> </div>
@@ -106,25 +92,45 @@
 
 
         <div class="container">
+            <?php
+            include './DB.php';
+            if (isset($_POST['btnPw'])) {
+
+                if ($_POST['newpass'] != '') {
+                    if ($_POST['newpass'] == $_POST['retypepass']) {
+                        $sql = " UPDATE aura_user SET pword = PASSWORD('" . $_POST['newpass'] . "') WHERE id = " . $_SESSION['ssn_user']['id'];
+                        setUpdate($sql, TRUE);
+                    } else {
+                        echo '<p>Invalid Password</p>';
+                    }
+                } else {
+                    echo '<p>Invalid Password</p>';
+                }
+            }
+            ?>
             <div class="row">
                 <div class="col-md-4"></div>
-                <div class="col-md-4">
-                    <br>
-                    <br>
-                    <form action="login.php" method="post">
+                <div class="col-md-4"> 
+
+                    <form class="form-horizontal" action="change_password.php" method="post">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Email</label>
-                            <input type="email"  name="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                            <label for="exampleInputEmail1">Current Password</label>
+                            <input required="" type="password" name="currentpass" class="form-control" id="exampleInputEmail1">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputPassword1">Password</label>
-                            <input type="password" name="pword" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                            <label for="exampleInputPassword1">New Password</label>
+                            <input required="" type="password" name="newpass" class="form-control" id="exampleInputPassword1" >
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Retype Password</label>
+                            <input required="" type="password" name="retypepass" class="form-control" id="exampleInputPassword1" >
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1"></label>
-                            <button type="submit" name="btnLogin" class="btn btn-primary">Login</button>
+                            <button type="submit" name="btnPw" class="btn btn-warning">Change Password</button>
                         </div>
                     </form>
+
                 </div>
                 <div class="col-md-4"></div>
             </div>

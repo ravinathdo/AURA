@@ -97,31 +97,26 @@
                 <div class="col-md-9">
                     <?php
                     include './DB.php';
-                    if (isset($_GET['oid'])) {
-                        $sql = " UPDATE aura_order SET STATUS = 'APPROVED' WHERE id = " . $_GET['oid'];
-                        setUpdate($sql, TRUE);
-                    }
+                  
                     ?>
 
                     <table id="example" class="display" cellspacing="0" width="100%">
                         <thead>
                             <tr>
-                                <th>#OID</th>
+                                <th>#PID</th>
                                 <th>Item Name</th>
                                 <th>Order Qty</th>
-                                <th>Status</th>
-                                <th>Order By</th>
-                                <th>Order Date</th>
-                                <th></th>
+                                <th>Item Price</th>
+                                <th>Total</th>
+                                <th>Date</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
-                            $sql = " select aura_order.id,aura_order.order_qty,aura_order.ordertime,aura_order.status,aura_item.item_name,aura_user.fname from aura_order
-inner join aura_item
-on aura_order.itemid = aura_item.id
-inner join aura_user
-on aura_user.id = aura_order.userid WHERE aura_order.userid = ".$_SESSION['ssn_user']['id'];
+                            $sql = " SELECT aura_sales.*,aura_item.item_name FROM aura_sales 
+INNER JOIN aura_item
+ON aura_sales.itemid = aura_item.id
+WHERE aura_sales.userid =  ".$_SESSION['ssn_user']['id'];
                             $resultx = getData($sql);
                             if ($resultx != FALSE) {
                                 while ($row = mysqli_fetch_assoc($resultx)) {
@@ -130,16 +125,11 @@ on aura_user.id = aura_order.userid WHERE aura_order.userid = ".$_SESSION['ssn_u
                                     <tr>
                                         <td><?= $row['id']; ?></td>
                                         <td><?= $row['item_name']; ?></td>
-                                        <td><?= $row['order_qty']; ?></td>
-                                        <td><?= $row['status']; ?></td>
-                                        <td><?= $row['fname']; ?></td>
-                                        <td><?= $row['ordertime']; ?></td>
-                                        <td><?php if ($row['status'] == 'PENDING') {
-                                        ?> <a class="btn btn-warning btn-xs" href="#"><?= $row['status']; ?></a> <?php
-                                            } else {
-                                                ?> <button type="button" class="btn btn-success btn-xs"><?= $row['status']; ?></button> <?php }
-                                            ?>
-                                        </td>
+                                        <td><?= $row['qty']; ?></td>
+                                        <td><?= $row['item_price']; ?></td>
+                                        <td><?= $row['total']; ?></td>
+                                        <td><?= $row['createdtime']; ?></td>
+                                        
                                     </tr>
                                     <?php
                                 }

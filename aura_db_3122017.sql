@@ -33,7 +33,7 @@ CREATE TABLE `aura_item` (
 
 /*Data for the table `aura_item` */
 
-insert  into `aura_item`(`id`,`item_name`,`category`,`price`,`available_qty`,`status`,`img_path`) values (1,'xxxx','T-SHIRT','223333.00',111,'ACTIVE','124.jpg'),(2,'fffff','SHIRT','33445.00',0,'ACTIVE','124Z.jpg');
+insert  into `aura_item`(`id`,`item_name`,`category`,`price`,`available_qty`,`status`,`img_path`) values (1,'Girls Frock','T-SHIRT','223333.00',111,'ACTIVE','124.jpg'),(2,'Women Silk Top','SHIRT','33445.00',0,'ACTIVE','124Z.jpg');
 
 /*Table structure for table `aura_order` */
 
@@ -67,11 +67,11 @@ CREATE TABLE `aura_sales` (
   `createdtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `orderid` int(5) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 /*Data for the table `aura_sales` */
 
-insert  into `aura_sales`(`id`,`userid`,`itemid`,`qty`,`item_price`,`total`,`createdtime`,`orderid`) values (1,1,2,4,'33445.00','133780.00','2017-12-02 16:43:39',NULL);
+insert  into `aura_sales`(`id`,`userid`,`itemid`,`qty`,`item_price`,`total`,`createdtime`,`orderid`) values (1,1,2,4,'33445.00','133780.00','2017-12-02 16:43:39',NULL),(2,3,1,111,'223333.00','24789963.00','2017-12-03 21:05:44',NULL),(3,3,1,111,'223333.00','24789963.00','2017-12-03 21:05:46',NULL);
 
 /*Table structure for table `aura_user` */
 
@@ -92,7 +92,7 @@ CREATE TABLE `aura_user` (
 
 /*Data for the table `aura_user` */
 
-insert  into `aura_user`(`id`,`fname`,`lname`,`gender`,`email`,`pword`,`mobile`,`regdatetime`,`role`) values (1,'admin','admin','male','a@gmail.com','*667F407DE7C6AD07358FA38DAED7828A72014B4E',715833470,'2017-11-27 21:00:07','ADMIN'),(2,'Kumara','Perera','MALE','sss@gg.com','*667F407DE7C6AD07358FA38DAED7828A72014B4E',715833470,'2017-12-02 17:54:22','CUSTOMER'),(3,'Ravinath','Fernando','MALE','ravi@gmail.com','*667F407DE7C6AD07358FA38DAED7828A72014B4E',715833470,'2017-12-02 18:09:20','CUSTOMER');
+insert  into `aura_user`(`id`,`fname`,`lname`,`gender`,`email`,`pword`,`mobile`,`regdatetime`,`role`) values (1,'admin','admin','male','admin@aura.lk','*4ACFE3202A5FF5CF467898FC58AAB1D615029441',715833470,'2017-11-27 21:00:07','ADMIN'),(2,'Kumara','Perera','MALE','sss@gg.com','*667F407DE7C6AD07358FA38DAED7828A72014B4E',715833470,'2017-12-02 17:54:22','CUSTOMER'),(3,'Ravinath','Fernando','MALE','ravi@gmail.com','*667F407DE7C6AD07358FA38DAED7828A72014B4E',715833470,'2017-12-02 18:09:20','CUSTOMER');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

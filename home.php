@@ -88,7 +88,7 @@
                 </div>
                 <div class="agileinfo-social-grids">
                     <ul>
-                        <li><a href="#"><i class="fa fa-user"></i><?= $_SESSION['ssn_user']['fname'];?></a></li>
+                        <li><a href="#"><i class="fa fa-user"></i><?= $_SESSION['ssn_user']['fname']; ?></a></li>
                         <li><a href="change_password.php"><i class="fa fa-lock"></i></a></li>
                         <li><a href="logout.php"><i class="fa fa-arrow-left"></i></a></li>
                     </ul>
@@ -107,35 +107,53 @@
 
         <div class="container">
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
 
                     <?php
                     include './DB.php';
-                    $sql = " SELECT * FROM aura_item  ";
+                    $sql = " SELECT * FROM aura_item WHERE status = 'ACTIVE'";
                     $resultx = getData($sql);
                     if ($resultx != FALSE) {
                         while ($row = mysqli_fetch_assoc($resultx)) {
                             ?>
 
                             <div class="Itemthub">
-                                <form action="purchase_item.php"  method="post" >
-                                    <input type="hidden" name="id" value="<?= $row['id']; ?>" />
-                                    <b><?= $row['item_name']; ?></b>
-                                    <img src="uploads/<?= $row['img_path'] ?>" alt="" class="img-thumbnail">
-                                    <table>
-                                        <tr>
-                                            <td>Rs <?= $row['price'] ?> <span class="btn btn-warning btn-xs" >Available <?= $row['available_qty'] ?>  </span></td>
-                                            <td></td>
-                                        </tr>
-                                    </table>
+                                <b><?= $row['item_name']; ?></b>
+                                <img src="uploads/<?= $row['img_path'] ?>" alt="" class="img-thumbnail">
+                                <table>
+                                    <tr>
+                                        <td>Rs <?= $row['price'] ?> <span class="btn btn-warning btn-xs" >Available <?= $row['available_qty'] ?>  </span></td>
+                                        <td></td>
+                                    </tr>
+                                </table>
 
-                                    <?php if ($_SESSION['ssn_user']['role'] == 'CUSTOMER') {
-                                                                    
-                                                            ?>
-                                    <input type="number" name="qty" max="<?= $row['available_qty'] ?>" required="" placeholder="Quantity" />
-                                    <input type="submit" name="btnBuy" value="Buy Now" class="btn btn-primary"  />
-                                    <?php     }?>
-                                </form>
+                                <?php if ($row['available_qty'] > 0) { ?>
+                                    <form action="purchase_item.php"  method="post" >
+                                        <input type="hidden" name="id" value="<?= $row['id']; ?>" />
+                                        <input type="hidden" name="available_qty" value="<?= $row['available_qty']; ?>"/>
+                                        <?php if ($_SESSION['ssn_user']['role'] == 'CUSTOMER') {
+                                            ?>
+                                            <input type="number" name="qty" max="<?= $row['available_qty'] ?>" required="" placeholder="Quantity" />
+                                            <input type="submit" name="btnBuy" value="Buy Now" class="btn btn-primary"  />
+                                        <?php } ?>
+                                    </form>
+                                <?php } else {
+                                    ?>
+                                    <button type="button" class="btn btn-danger btn-xs">Item out of stock please order now</button>
+                                    <form action="order_item_now.php"  method="post" >
+                                        <input type="hidden" name="id" value="<?= $row['id']; ?>" />
+                                        <input type="hidden" name="available_qty" value="<?= $row['available_qty']; ?>"/>
+                                        <?php if ($_SESSION['ssn_user']['role'] == 'CUSTOMER') {
+                                            ?>
+                                            <input type="number" name="qty" required="" placeholder="Quantity" />
+                                            <input type="submit" name="btnBuy" value="Order Now" class="btn btn-warning"  />
+                                        <?php } ?>
+                                    </form>
+                                <?php }
+                                ?>
+
+
                             </div>
                             <?php
                         }
@@ -143,7 +161,7 @@
                     ?>
 
                 </div>
-                <div class="col-md-4">.col-md-4</div>
+                <div class="col-md-1"></div>
             </div>
         </div>
 

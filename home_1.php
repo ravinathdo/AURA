@@ -37,27 +37,17 @@
         <!--[if lt IE 9]>
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <![endif]-->
+
+        <style type="text/css">
+            .Itemthub{
+                width: 200px;
+                height: 300px;
+                float: left;
+
+            }
+        </style>
     </head>
     <body>
-        <?php
-        include './DB.php';
-        if (isset($_POST['btnLogin'])) {
-
-            $sql = "select * from aura_user where email = '" . $_POST['email'] . "' and pword = password('" . $_POST['pword'] . "')";
-            //echo $sql;
-            $result = getData($sql);
-            if ($result) {
-                if (mysqli_num_rows($result) > 0) {
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        $_SESSION['ssn_user'] = $row;
-                    }
-                    header("Location:home.php");
-                }
-            } else {
-                echo '<p class="bg-danger"><b>Invalid Username or Password</b></p>';
-            }
-        }
-        ?>
         <!-- banner -->
         <div class="bannerx" id="home">
             <div class="w3-header-bottom">
@@ -81,7 +71,16 @@
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav">
-                                <?php include '_menu_common.php'; ?>
+
+                                <?php
+                                if ($_SESSION['ssn_user']['role'] == 'CUSTOMER') {
+                                    include './_menu_customer.php';
+                                } else if ($_SESSION['ssn_user']['role'] == 'ADMIN') {
+                                    include './_menu_admin.php';
+                                }
+                                ?>
+
+
                             </ul>	
                             <div class="clearfix"> </div>
                         </div>	
@@ -89,8 +88,9 @@
                 </div>
                 <div class="agileinfo-social-grids">
                     <ul>
-                        <li><a href="registration.php"><i class="fa fa-user"></i></a></li>
-                        <li><a href="login.php"><i class="fa fa-arrow-right"></i></a></li>
+                        <li><a href="#"><i class="fa fa-user"></i><?= $_SESSION['ssn_user']['fname'];?></a></li>
+                        <li><a href="change_password.php"><i class="fa fa-lock"></i></a></li>
+                        <li><a href="logout.php"><i class="fa fa-arrow-left"></i></a></li>
                     </ul>
                 </div>
                 <div class="clearfix"> </div>
@@ -107,50 +107,47 @@
 
         <div class="container">
             <div class="row">
-                <div class="col-md-4"></div>
-                <div class="col-md-4">
-                    <br>
-                    <br>
-                    <form action="login.php" method="post">
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Email</label>
-                            <input type="email"  name="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">Password</label>
-                            <input type="password" name="pword" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword1"></label>
-                            <button type="submit" name="btnLogin" class="btn btn-primary">Login</button>
-                        </div>
-                    </form>
+                <div class="col-md-8">
+
+                    <?php
+                    include './DB.php';
+                    $sql = " SELECT * FROM aura_item  ";
+                    $resultx = getData($sql);
+                    if ($resultx != FALSE) {
+                        while ($row = mysqli_fetch_assoc($resultx)) {
+                            ?>
+
+                            <div class="Itemthub">
+                                <form action="purchase_item.php"  method="post" >
+                                    <input type="hidden" name="id" value="<?= $row['id']; ?>" />
+                                    <b><?= $row['item_name']; ?></b>
+                                    <img src="uploads/<?= $row['img_path'] ?>" alt="" class="img-thumbnail">
+                                    <table>
+                                        <tr>
+                                            <td>Rs <?= $row['price'] ?> <span class="btn btn-warning btn-xs" >Available <?= $row['available_qty'] ?>  </span></td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+
+                                    <?php if ($_SESSION['ssn_user']['role'] == 'CUSTOMER') {
+                                                            ?>
+                                    <input type="number" name="qty" max="<?= $row['available_qty'] ?>" required="" placeholder="Quantity" />
+                                    <input type="submit" name="btnBuy" value="Buy Now" class="btn btn-primary"  />
+                                    <?php     }?>
+                                </form>
+                            </div>
+                            <?php
+                        }
+                    }
+                    ?>
+
                 </div>
-                <div class="col-md-4"></div>
+                <div class="col-md-4">.col-md-4</div>
             </div>
         </div>
 
 
 
-
-        <!-- modal -->
-        <div class="modal about-modal fade" id="myModal" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header"> 
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>						
-                        <h4 class="modal-title">Wear fashions</h4>
-                    </div> 
-                    <div class="modal-body">
-                        <div class="agileits-w3layouts-info">
-                            <img src="images/pop1.jpg" alt="" />
-                            <p>Duis venenatis, turpis eu bibendum porttitor, sapien quam ultricies tellus, ac rhoncus risus odio eget nunc. Pellentesque ac fermentum diam. Integer eu facilisis nunc, a iaculis felis. Pellentesque pellentesque tempor enim, in dapibus turpis porttitor quis. Suspendisse ultrices hendrerit massa. Nam id metus id tellus ultrices ullamcorper.  Cras tempor massa luctus, varius lacus sit amet, blandit lorem. Duis auctor in tortor sed tristique. Proin sed finibus sem</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- //modal -->
 
 
 
@@ -165,7 +162,7 @@
 
         <!-- footer -->
 
-        <?php include './_footer.php'; ?>
+        <?php // include './_footer.php'; ?>
         <!-- //footer -->
 
         <script src="js/responsiveslides.min.js"></script>

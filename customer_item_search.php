@@ -114,7 +114,7 @@
                         <tbody>
                             <?php
                             include './DB.php';
-                            $sql = " SELECT * FROM aura_item ";
+                            $sql = " SELECT * FROM aura_item WHERE status = 'ACTIVE' ";
                             $resultx = getData($sql);
                             if ($resultx != FALSE) {
                                 while ($row = mysqli_fetch_assoc($resultx)) {
@@ -131,6 +131,7 @@
                                             <?php if ($row['available_qty'] > 0) { ?>
                                                 <form action="purchase_item.php"  method="post" >
                                                     <input type="hidden" name="id" value="<?= $row['id']; ?>" />
+                                                    <input type="hidden" name="available_qty" value="<?= $row['available_qty']; ?>"/>
                                                     <?php if ($_SESSION['ssn_user']['role'] == 'CUSTOMER') {
                                                         ?>
                                                         <input type="number" name="qty" max="<?= $row['available_qty'] ?>" required="" placeholder="Quantity" />
@@ -142,13 +143,14 @@
                                                 <button type="button" class="btn btn-danger btn-xs">Item out of stock please order now</button>
                                                 <form action="order_item_now.php"  method="post" >
                                                     <input type="hidden" name="id" value="<?= $row['id']; ?>" />
+                                                    <input type="hidden" name="available_qty" value="<?= $row['available_qty']; ?>"/>
                                                     <?php if ($_SESSION['ssn_user']['role'] == 'CUSTOMER') {
                                                         ?>
                                                         <input type="number" name="qty" required="" placeholder="Quantity" />
                                                         <input type="submit" name="btnBuy" value="Order Now" class="btn btn-warning"  />
                                                     <?php } ?>
                                                 </form>
-                                                <?php }
+                                            <?php }
                                             ?>
 
 

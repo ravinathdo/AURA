@@ -39,25 +39,6 @@
         <![endif]-->
     </head>
     <body>
-        <?php
-        include './DB.php';
-        if (isset($_POST['btnLogin'])) {
-
-            $sql = "select * from aura_user where email = '" . $_POST['email'] . "' and pword = password('" . $_POST['pword'] . "')";
-            //echo $sql;
-            $result = getData($sql);
-            if ($result) {
-                if (mysqli_num_rows($result) > 0) {
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        $_SESSION['ssn_user'] = $row;
-                    }
-                    header("Location:home.php");
-                }
-            } else {
-                echo '<p class="bg-danger"><b>Invalid Username or Password</b></p>';
-            }
-        }
-        ?>
         <!-- banner -->
         <div class="bannerx" id="home">
             <div class="w3-header-bottom">
@@ -81,7 +62,7 @@
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav">
-                                <?php include '_menu_common.php'; ?>
+                                <?php include './_menu_common.php'; ?>
                             </ul>	
                             <div class="clearfix"> </div>
                         </div>	
@@ -107,26 +88,14 @@
 
         <div class="container">
             <div class="row">
-                <div class="col-md-4"></div>
-                <div class="col-md-4">
-                    <br>
-                    <br>
-                    <form action="login.php" method="post">
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Email</label>
-                            <input type="email"  name="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">Password</label>
-                            <input type="password" name="pword" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword1"></label>
-                            <button type="submit" name="btnLogin" class="btn btn-primary">Login</button>
-                        </div>
-                    </form>
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <h3>About</h3>
+                    <p>was founded in 1994 in Bandarawela with a 7 member team. The first shop being a mere 300 square feet in the Bandarawela town,
+                    was founded in 1994 in Bandarawela with a 7 member team. The first shop being a mere 300 square feet in the Bandarawela town</p>
+                    
                 </div>
-                <div class="col-md-4"></div>
+                <div class="col-md-3"></div>
             </div>
         </div>
 
@@ -165,7 +134,6 @@
 
         <!-- footer -->
 
-        <?php include './_footer.php'; ?>
         <!-- //footer -->
 
         <script src="js/responsiveslides.min.js"></script>

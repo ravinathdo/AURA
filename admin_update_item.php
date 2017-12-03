@@ -100,7 +100,7 @@
                     include './DB.php';
 
                     if (isset($_POST['id'])) {
-                        $sql_u = "UPDATE aura_item SET price = '" . $_POST['price'] . "',available_qty = '" . $_POST['qty'] . "' WHERE id = ".$_POST['id'];
+                        $sql_u = "UPDATE aura_item SET price = '" . $_POST['price'] . "',available_qty = '" . $_POST['qty'] . "',status = '" . $_POST['status'] . "'  WHERE id = ".$_POST['id'];
                         setUpdate($sql_u, TRUE);
                     }
 
@@ -146,6 +146,14 @@
                                         <tr>
                                             <td>Qty</td>
                                             <td><input type="number" name="qty" value="<?= $row['available_qty']; ?>" required="" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Status</td>
+                                            <td><select name="status">
+                                                    <option value="ACTIVE">ACTIVE</option>
+                                                    <option value="DEACTIVE">DEACTIVE</option>
+                                                </select>
+                                                <input type="number" name="qty" value="<?= $row['available_qty']; ?>" required="" /></td>
                                         </tr>
                                         <tr>
                                             <td></td>

@@ -76,10 +76,9 @@
                 </div>
                 <div class="agileinfo-social-grids">
                     <ul>
-                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa fa-rss"></i></a></li>
-                        <li><a href="#"><i class="fa fa-vk"></i></a></li>
+                        <li><a href="#"><i class="fa fa-user"></i><?= $_SESSION['ssn_user']['fname']; ?></a></li>
+                        <li><a href="change_password.php"><i class="fa fa-lock"></i></a></li>
+                        <li><a href="logout.php"><i class="fa fa-arrow-left"></i></a></li>
                     </ul>
                 </div>
                 <div class="clearfix"> </div>
@@ -116,6 +115,11 @@ values ('".$_SESSION['ssn_user']['id']."',
         '".$_POST['total']."'); ";
 
                         setData($sql, FALSE);
+                        //update availabe 
+                        $balance = $_POST['available_qty'] - $_POST['qty'];
+                        $upQuery = " UPDATE aura_item SET available_qty = '".$balance."' WHERE id = ".$_POST['id'];
+                        setUpdate($sql, FALSE);
+                        
                         ?>
 
                         <h2>‘AURA’ Textile-Online - Payment</h2>
