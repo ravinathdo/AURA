@@ -1,4 +1,4 @@
-<?php session_start();?>
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -62,11 +62,10 @@
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav">
-                                 <?php
-                                
-                                if($_SESSION['ssn_user']['role'] == 'CUSTOMER'){
+                                <?php
+                                if ($_SESSION['ssn_user']['role'] == 'CUSTOMER') {
                                     include './_menu_customer.php';
-                                }else  if($_SESSION['ssn_user']['role'] == 'ADMIN') {
+                                } else if ($_SESSION['ssn_user']['role'] == 'ADMIN') {
                                     include './_menu_admin.php';
                                 }
                                 ?>
@@ -77,10 +76,9 @@
                 </div>
                 <div class="agileinfo-social-grids">
                     <ul>
-                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa fa-rss"></i></a></li>
-                        <li><a href="#"><i class="fa fa-vk"></i></a></li>
+                        <li><a href="#"><i class="fa fa-user"></i><?= $_SESSION['ssn_user']['fname'];?></a></li>
+                        <li><a href="change_password.php"><i class="fa fa-lock"></i></a></li>
+                        <li><a href="logout.php"><i class="fa fa-arrow-left"></i></a></li>
                     </ul>
                 </div>
                 <div class="clearfix"> </div>
@@ -89,7 +87,7 @@
 
 
             </div>
-            
+
         </div>
         <!-- //banner -->
 
@@ -97,14 +95,84 @@
 
         <div class="container">
             <div class="row">
-                <div class="col-md-8">.col-md-8</div>
+                <div class="col-md-8">
+                    <?php
+                    include './DB.php';
+
+                    if (isset($_POST['id'])) {
+                        $sql_u = "UPDATE aura_item SET price = '" . $_POST['price'] . "',available_qty = '" . $_POST['qty'] . "' WHERE id = ".$_POST['id'];
+                        setUpdate($sql_u, TRUE);
+                    }
+
+
+
+
+                    if (isset($_GET['id']) || isset($_POST['id'])) {
+                        $id = 0;
+                        if(isset($_GET['id'])){
+                        $id = $_GET['id'];
+                        }
+                        if(isset($_POST['id'])){
+                        $id = $_POST['id'];
+                        }
+                        $sql = "SELECT * FROM aura_item WHERE id = " . $id;
+                        $resultx = getData($sql);
+                        ?> 
+
+                        <form action="admin_update_item.php" method="post" >
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <?php
+                                    if ($resultx != FALSE) {
+                                        while ($row = mysqli_fetch_assoc($resultx)) {
+                                            ?>
+                                        <input type="hidden" name="id" value="<?= $row['id']; ?>" />
+                                        <tr>
+                                            <td>Item Name</td>
+                                            <td><?= $row['item_name']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td><img style="width: 200px" src="uploads/<?= $row['img_path']; ?>"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Category</td>
+                                            <td><?= $row['category']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>price</td>
+                                            <td><input type="number" name="price" value="<?= $row['price']; ?>" required="" /> </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Qty</td>
+                                            <td><input type="number" name="qty" value="<?= $row['available_qty']; ?>" required="" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <button type="submit" name="btnUpdate" class="btn btn-warning">Update Item</button>
+
+                                            </td>
+                                        </tr>
+                                        <?php
+                                    }
+                                }
+                                ?>
+                                </tbody>
+                            </table>
+                        </form>
+                        <?php
+                    }
+                    ?>
+
+                </div>
                 <div class="col-md-4">.col-md-4</div>
             </div>
         </div>
-        
-        
-        
-        
+
+
+
+
         <!-- modal -->
         <div class="modal about-modal fade" id="myModal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
@@ -137,7 +205,7 @@
 
         <!-- footer -->
 
-        <?php include './_footer.php';?>
+        <?php include './_footer.php'; ?>
         <!-- //footer -->
 
         <script src="js/responsiveslides.min.js"></script>

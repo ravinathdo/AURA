@@ -1,4 +1,4 @@
-<?php session_start();?>
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -62,11 +62,10 @@
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav">
-                                 <?php
-                                
-                                if($_SESSION['ssn_user']['role'] == 'CUSTOMER'){
+                                <?php
+                                if ($_SESSION['ssn_user']['role'] == 'CUSTOMER') {
                                     include './_menu_customer.php';
-                                }else  if($_SESSION['ssn_user']['role'] == 'ADMIN') {
+                                } else if ($_SESSION['ssn_user']['role'] == 'ADMIN') {
                                     include './_menu_admin.php';
                                 }
                                 ?>
@@ -77,10 +76,9 @@
                 </div>
                 <div class="agileinfo-social-grids">
                     <ul>
-                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa fa-rss"></i></a></li>
-                        <li><a href="#"><i class="fa fa-vk"></i></a></li>
+                        <li><a href="#"><i class="fa fa-user"></i><?= $_SESSION['ssn_user']['fname'];?></a></li>
+                        <li><a href="change_password.php"><i class="fa fa-lock"></i></a></li>
+                        <li><a href="#"><i class="fa fa-arrow-left"></i></a></li>
                     </ul>
                 </div>
                 <div class="clearfix"> </div>
@@ -89,7 +87,7 @@
 
 
             </div>
-            
+
         </div>
         <!-- //banner -->
 
@@ -97,14 +95,60 @@
 
         <div class="container">
             <div class="row">
-                <div class="col-md-8">.col-md-8</div>
-                <div class="col-md-4">.col-md-4</div>
+                <h2>Manage Items</h2>
+                  <div class="col-md-1"></div>
+                <div class="col-md-10">
+
+
+                    <table id="example" class="display" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Item Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Qty</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            include './DB.php';
+                            $sql = " SELECT * FROM aura_item ";
+                            $resultx = getData($sql);
+                            if ($resultx != FALSE) {
+                                while ($row = mysqli_fetch_assoc($resultx)) {
+                                    ?>
+
+                                    <tr>
+                                        <td><?= $row['item_name']; ?></td>
+                                        <td><?= $row['category']; ?></td>
+                                        <td>Rs. <?= $row['price']; ?></td>
+                                        <td><?= $row['available_qty']; ?></td>
+                                        <td><img style="width: 200px" src="uploads/<?= $row['img_path']; ?>"/></td>
+                                        <td><a href="admin_update_item.php?id=<?= $row['id']; ?>">Update</a></td>
+                                    </tr>
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="col-md-1"></div>
             </div>
         </div>
+
+
         
         
         
+       
         
+       
+
+
         <!-- modal -->
         <div class="modal about-modal fade" id="myModal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
@@ -137,8 +181,18 @@
 
         <!-- footer -->
 
-        <?php include './_footer.php';?>
+        <?php include './_footer.php'; ?>
         <!-- //footer -->
+
+
+        <link href="css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+        <script src="js/jquery.dataTables.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#example').DataTable();
+            });
+        </script>
+
 
         <script src="js/responsiveslides.min.js"></script>
         <script>

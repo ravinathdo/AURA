@@ -1,4 +1,4 @@
-<?php session_start();?>
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -62,14 +62,7 @@
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav">
-                                 <?php
-                                
-                                if($_SESSION['ssn_user']['role'] == 'CUSTOMER'){
-                                    include './_menu_customer.php';
-                                }else  if($_SESSION['ssn_user']['role'] == 'ADMIN') {
-                                    include './_menu_admin.php';
-                                }
-                                ?>
+                                <li class="first-list"><a class="active" href="index.php">Home</a></li>
                             </ul>	
                             <div class="clearfix"> </div>
                         </div>	
@@ -78,9 +71,8 @@
                 <div class="agileinfo-social-grids">
                     <ul>
                         <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa fa-rss"></i></a></li>
-                        <li><a href="#"><i class="fa fa-vk"></i></a></li>
+                                        <li><a href="registration.php"><i class="fa fa-user"></i></a></li>
+                                        <li><a href="login.php"><i class="fa fa-arrow-right"></i></a></li>
                     </ul>
                 </div>
                 <div class="clearfix"> </div>
@@ -89,7 +81,7 @@
 
 
             </div>
-            
+
         </div>
         <!-- //banner -->
 
@@ -97,14 +89,96 @@
 
         <div class="container">
             <div class="row">
-                <div class="col-md-8">.col-md-8</div>
-                <div class="col-md-4">.col-md-4</div>
+                <div class="col-md-8">
+                    <h2>Register Now</h2>
+
+                    <?php
+                    include './DB.php';
+                    if (isset($_POST['btnReg'])) {
+
+
+                        if ($_POST['password'] == $_POST['repassword']) {
+
+                            $sql = " insert into `aura_user`
+            (`fname`,
+             `lname`,
+             `gender`,
+             `email`,
+             `pword`,
+             `mobile`,
+             `role`)
+values ('" . $_POST['fname'] . "',
+        '" . $_POST['lname'] . "',
+        '" . $_POST['gender'] . "',
+        '" . $_POST['email'] . "',
+        password('" . $_POST['password'] . "'),
+        '" . $_POST['mobile'] . "',
+        'CUSTOMER'); ";
+                            setData($sql, TRUE);
+                        } else {
+                             echo '<p class="bg-warning">Password mismatch</p>';
+                        }
+                    }
+                    ?>
+                    <form class="form-horizontal" action="registration.php" method="post">
+                        <div class="form-group">
+                            <label for="inputEmail3"  class="col-sm-2 control-label">First Name</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="fname" required="" class="form-control" id="inputEmail3" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Last Name</label>
+                            <div class="col-sm-10">
+                                <input type="text" required="" name="lname" class="form-control" id="inputEmail3" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Gender</label>
+                            <div class="col-sm-10">
+                                <input type="radio"  name="gender" value="MALE" checked=""> MALE
+                                <input type="radio"  name="gender" value="FEMALE"> FEMALE
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+                            <div class="col-sm-10">
+                                <input type="email" required="" name="email" class="form-control" id="inputEmail3" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Mobile</label>
+                            <div class="col-sm-10">
+                                <input type="number" required=""  name="mobile" class="form-control" id="inputEmail3" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+                            <div class="col-sm-10">
+                                <input type="password" required=""  name="password" class="form-control" id="inputPassword3" placeholder="Password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword3" class="col-sm-2 control-label">Retype Password</label>
+                            <div class="col-sm-10">
+                                <input type="password" name="repassword" class="form-control" id="inputPassword3" placeholder="Retype Password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword3" class="col-sm-2 control-label"></label>
+                            <div class="col-sm-10">
+                                <button type="submit" name="btnReg" class="btn btn-primary">Register Now</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-4"></div>
             </div>
         </div>
-        
-        
-        
-        
+
+
+
+
         <!-- modal -->
         <div class="modal about-modal fade" id="myModal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
@@ -137,7 +211,7 @@
 
         <!-- footer -->
 
-        <?php include './_footer.php';?>
+<?php include './_footer.php'; ?>
         <!-- //footer -->
 
         <script src="js/responsiveslides.min.js"></script>

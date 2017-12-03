@@ -44,7 +44,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<div class="w3-header-bottom">
 			<div class="w3layouts-logo">
 				<h1>
-					<a href="index.html">Wear </a>
+					<a href="index.html">AURA</a>
 					<i class="fa fa-shopping-bag" aria-hidden="true"></i>
 					
 				</h1>
@@ -62,7 +62,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<!-- Collect the nav links, forms, and other content for toggling -->
 							<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 								<ul class="nav navbar-nav">
-									<li class="first-list"><a class="active" href="index.html">Home</a></li>
+									<li class="first-list"><a class="active" href="index.php">Home</a></li>
 									<li><a href="#about" class="scroll">About</a></li>
 									<li><a href="#services" class="scroll">Services</a></li>
 									<li><a href="#portfolio" class="scroll">Portfolio</a></li>
@@ -76,8 +76,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="agileinfo-social-grids">
 				<ul>
 					<li><a href="#"><i class="fa fa-facebook"></i></a></li>
-					<li><a href="#"><i class="fa fa-user"></i></a></li>
-					<li><a href="#"><i class="fa fa-arrow-right"></i></a></li>
+                                        <li><a href="registration.php"><i class="fa fa-user"></i></a></li>
+                                        <li><a href="login.php"><i class="fa fa-arrow-right"></i></a></li>
 				</ul>
 			</div>
 			<div class="clearfix"> </div>
@@ -514,29 +514,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 <!-- footer -->
 
-<div class="footer-bot wow fadeInRight animated" data-wow-delay=".5s">
-	<div class="container">
-			<div class="logo2">
-				<h3><a href="index.html">Wear</a></h3>
-			</div>
-			<div class="ftr-menu">
-				 <ul>
-					<li><a class="scroll" href="#home">Home </a></li>
-					<li><a class="scroll" href="#about">About</a></li>
-					<li><a class="scroll" href="#services">Services</a></li>
-					<li><a class="scroll" href="#models">models</a></li>
-					<li><a class="scroll" href="#testimonials">Testimonials</a></li>
-					<li><a class="scroll" href="#contact">Contact</a></li>
-				 </ul>
-			</div>
-			<div class="clearfix"></div>
-	</div>
-</div>
-<div class="copy-right wow fadeInLeft animated" data-wow-delay=".5s">
-	<div class="container">
-			<p> &copy; 2017 Wear . All Rights Reserved | Design by  <a href="http://w3layouts.com/"> W3layouts</a></p>
-	</div>
-</div>
+<?php include './_footer.php'; ?>
 <!-- //footer -->
 
 	<script src="js/responsiveslides.min.js"></script>

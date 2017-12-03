@@ -44,7 +44,7 @@
         if (isset($_POST['btnLogin'])) {
 
             $sql = "select * from aura_user where email = '" . $_POST['email'] . "' and pword = password('" . $_POST['pword'] . "')";
-            //echo $sql;
+            echo $sql;
             $result = getData($sql);
             if ($result) {
                 if (mysqli_num_rows($result) > 0) {
@@ -81,7 +81,7 @@
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav">
-<?php include '_menu_common.php'; ?>
+                                <?php include '_menu_common.php'; ?>
                             </ul>	
                             <div class="clearfix"> </div>
                         </div>	
@@ -90,9 +90,8 @@
                 <div class="agileinfo-social-grids">
                     <ul>
                         <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa fa-rss"></i></a></li>
-                        <li><a href="#"><i class="fa fa-vk"></i></a></li>
+                        <li><a href="#"><i class="fa fa-user"></i></a></li>
+                        <li><a href="login.php"><i class="fa fa-arrow-right"></i></a></li>
                     </ul>
                 </div>
                 <div class="clearfix"> </div>
@@ -128,7 +127,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="col-md-4">.col-md-4</div>
+                <div class="col-md-4"></div>
             </div>
         </div>
 
@@ -167,7 +166,7 @@
 
         <!-- footer -->
 
-<?php include './_footer.php'; ?>
+        <?php include './_footer.php'; ?>
         <!-- //footer -->
 
         <script src="js/responsiveslides.min.js"></script>

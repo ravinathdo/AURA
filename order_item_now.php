@@ -1,4 +1,4 @@
-<?php session_start();?>
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -62,11 +62,10 @@
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav">
-                                 <?php
-                                
-                                if($_SESSION['ssn_user']['role'] == 'CUSTOMER'){
+                                <?php
+                                if ($_SESSION['ssn_user']['role'] == 'CUSTOMER') {
                                     include './_menu_customer.php';
-                                }else  if($_SESSION['ssn_user']['role'] == 'ADMIN') {
+                                } else if ($_SESSION['ssn_user']['role'] == 'ADMIN') {
                                     include './_menu_admin.php';
                                 }
                                 ?>
@@ -89,7 +88,7 @@
 
 
             </div>
-            
+
         </div>
         <!-- //banner -->
 
@@ -97,33 +96,36 @@
 
         <div class="container">
             <div class="row">
-                <div class="col-md-8">.col-md-8</div>
-                <div class="col-md-4">.col-md-4</div>
-            </div>
-        </div>
-        
-        
-        
-        
-        <!-- modal -->
-        <div class="modal about-modal fade" id="myModal" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header"> 
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>						
-                        <h4 class="modal-title">Wear fashions</h4>
-                    </div> 
-                    <div class="modal-body">
-                        <div class="agileits-w3layouts-info">
-                            <img src="images/pop1.jpg" alt="" />
-                            <p>Duis venenatis, turpis eu bibendum porttitor, sapien quam ultricies tellus, ac rhoncus risus odio eget nunc. Pellentesque ac fermentum diam. Integer eu facilisis nunc, a iaculis felis. Pellentesque pellentesque tempor enim, in dapibus turpis porttitor quis. Suspendisse ultrices hendrerit massa. Nam id metus id tellus ultrices ullamcorper.  Cras tempor massa luctus, varius lacus sit amet, blandit lorem. Duis auctor in tortor sed tristique. Proin sed finibus sem</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- //modal -->
+                <div class="col-md-8">
 
+                    <?php
+                    include './DB.php';
+                    $sql = " insert into `aura_order`
+            (`itemid`,
+             `userid`,
+             `order_qty`,
+             `status`)
+values ('".$_POST['id']."',
+        '".$_SESSION['ssn_user']['id']."',
+        '".$_POST['qty']."',
+        'PENDING'); ";
+                    
+                  $oid =   setData($sql, TRUE);
+                    
+                   
+                    
+                    ?>
+                    <h2>New Order Created Order ID:<?=$oid;?></h2>
+                    
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+        </div>
+
+
+
+
+      
 
 
 
@@ -137,7 +139,7 @@
 
         <!-- footer -->
 
-        <?php include './_footer.php';?>
+<?php // include './_footer.php'; ?>
         <!-- //footer -->
 
         <script src="js/responsiveslides.min.js"></script>

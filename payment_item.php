@@ -1,4 +1,4 @@
-<?php session_start();?>
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -62,11 +62,10 @@
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav">
-                                 <?php
-                                
-                                if($_SESSION['ssn_user']['role'] == 'CUSTOMER'){
+                                <?php
+                                if ($_SESSION['ssn_user']['role'] == 'CUSTOMER') {
                                     include './_menu_customer.php';
-                                }else  if($_SESSION['ssn_user']['role'] == 'ADMIN') {
+                                } else if ($_SESSION['ssn_user']['role'] == 'ADMIN') {
                                     include './_menu_admin.php';
                                 }
                                 ?>
@@ -89,7 +88,7 @@
 
 
             </div>
-            
+
         </div>
         <!-- //banner -->
 
@@ -97,14 +96,67 @@
 
         <div class="container">
             <div class="row">
-                <div class="col-md-8">.col-md-8</div>
-                <div class="col-md-4">.col-md-4</div>
+                <div class="col-md-8" id="PRINT">
+
+                    <?php
+
+                  
+                    if (isset($_POST['btnPay'])) {
+                        include './DB.php';
+                        $sql = " insert into `aura_sales`
+            (`userid`,
+             `itemid`,
+             `qty`,
+             `item_price`,
+             `total`)
+values ('".$_SESSION['ssn_user']['id']."',
+        '".$_POST['id']."',
+        '".$_POST['qty']."',
+        '".$_POST['price']."',
+        '".$_POST['total']."'); ";
+
+                        setData($sql, FALSE);
+                        ?>
+
+                        <h2>‘AURA’ Textile-Online - Payment</h2>
+                        <p><?php printNowTime(); ?></p>
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td>Item Name</td>
+                                    <td><?= $_POST['item_name'] ?></td>
+                                </tr>
+                                <tr>
+                                    <td>Unit Price</td>
+                                    <td><?= $_POST['price'] ?></td>
+                                </tr>
+                                <tr>
+                                    <td>Purchase Qty</td>
+                                    <td><?= $_POST['qty'] ?></td>
+                                </tr>
+                                <tr>
+                                    <td>Total </td>
+                                    <td><?= $_POST['total'] ?></td>
+                                </tr>
+                                <tr>
+                                    <td> </td>
+                                    <td>Your payment has been successfully completed</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <?php
+                    }
+                    ?>
+
+                    <input type="button" onclick="printDiv('PRINT')" value="print" />
+                </div>
+                <div class="col-md-4"></div>
             </div>
         </div>
-        
-        
-        
-        
+
+
+
+
         <!-- modal -->
         <div class="modal about-modal fade" id="myModal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
@@ -137,8 +189,18 @@
 
         <!-- footer -->
 
-        <?php include './_footer.php';?>
+        <?php include './_footer.php'; ?>
         <!-- //footer -->
+
+        <script type="text/javascript">
+            function printDiv(divId) {
+                var printContents = document.getElementById(divId).innerHTML;
+                var originalContents = document.body.innerHTML;
+                document.body.innerHTML = "<html><head><title></title></head><body>" + printContents + "</body>";
+                window.print();
+                document.body.innerHTML = originalContents;
+            }
+        </script>
 
         <script src="js/responsiveslides.min.js"></script>
         <script>

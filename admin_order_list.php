@@ -1,4 +1,4 @@
-<?php session_start();?>
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -62,11 +62,10 @@
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav">
-                                 <?php
-                                
-                                if($_SESSION['ssn_user']['role'] == 'CUSTOMER'){
+                                <?php
+                                if ($_SESSION['ssn_user']['role'] == 'CUSTOMER') {
                                     include './_menu_customer.php';
-                                }else  if($_SESSION['ssn_user']['role'] == 'ADMIN') {
+                                } else if ($_SESSION['ssn_user']['role'] == 'ADMIN') {
                                     include './_menu_admin.php';
                                 }
                                 ?>
@@ -77,10 +76,7 @@
                 </div>
                 <div class="agileinfo-social-grids">
                     <ul>
-                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa fa-rss"></i></a></li>
-                        <li><a href="#"><i class="fa fa-vk"></i></a></li>
+                        <?php include './_right.php'; ?>
                     </ul>
                 </div>
                 <div class="clearfix"> </div>
@@ -89,7 +85,7 @@
 
 
             </div>
-            
+
         </div>
         <!-- //banner -->
 
@@ -97,14 +93,72 @@
 
         <div class="container">
             <div class="row">
-                <div class="col-md-8">.col-md-8</div>
-                <div class="col-md-4">.col-md-4</div>
+                <div class="col-md-9">
+                    <h2>Customer Orders</h2>
+
+                    <?php
+                    include './DB.php';
+                    if (isset($_GET['oid'])) {
+                        $sql = " UPDATE aura_order SET STATUS = 'APPROVED' WHERE id = " . $_GET['oid'];
+                        setUpdate($sql, TRUE);
+                    }
+                    ?>
+
+                    <table id="example" class="display" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>#OID</th>
+                                <th>Item Name</th>
+                                <th>Order Qty</th>
+                                <th>Status</th>
+                                <th>Order By</th>
+                                <th>Order Date</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $sql = " select aura_order.id,aura_order.order_qty,aura_order.ordertime,aura_order.status,aura_item.item_name,aura_user.fname from aura_order
+inner join aura_item
+on aura_order.itemid = aura_item.id
+inner join aura_user
+on aura_user.id = aura_order.userid ";
+                            $resultx = getData($sql);
+                            if ($resultx != FALSE) {
+                                while ($row = mysqli_fetch_assoc($resultx)) {
+                                    ?>
+
+                                    <tr>
+                                        <td><?= $row['id']; ?></td>
+                                        <td><?= $row['item_name']; ?></td>
+                                        <td><?= $row['order_qty']; ?></td>
+                                        <td><?= $row['status']; ?></td>
+                                        <td><?= $row['fname']; ?></td>
+                                        <td><?= $row['ordertime']; ?></td>
+                                        <td><?php if ($row['status'] == 'PENDING') {
+                                        ?> <a class="btn btn-warning btn-xs" href="admin_order_list.php?status=APPROVE&oid=<?= $row['id']; ?>">Approve now</a> <?php
+                                            } else {
+                                                ?> <button type="button" class="btn btn-success btn-xs"><?= $row['status']; ?></button> <?php }
+                                            ?>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+
+
+
+                </div>
+                <div class="col-md-3"></div>
             </div>
         </div>
-        
-        
-        
-        
+
+
+
+
         <!-- modal -->
         <div class="modal about-modal fade" id="myModal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
@@ -137,8 +191,16 @@
 
         <!-- footer -->
 
-        <?php include './_footer.php';?>
+        <?php include './_footer.php'; ?>
         <!-- //footer -->
+
+        <link href="css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+        <script src="js/jquery.dataTables.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#example').DataTable();
+            });
+        </script>
 
         <script src="js/responsiveslides.min.js"></script>
         <script>

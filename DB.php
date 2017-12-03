@@ -30,7 +30,7 @@ function setData($sql, $MSG) {
     if (mysqli_query($conn, $sql)) {
         $last_id = mysqli_insert_id($conn);
         if ($MSG)
-            echo '<p class="bg-success">New record created successfully<p>';
+            echo '<p class="bg-success">New record created successfully</p>';
         return $last_id;
     } else {
         if ($MSG)
@@ -60,7 +60,7 @@ function setUpdate($sql, $MSG) {
     }
     if (mysqli_query($conn, $sql)) {
         if ($MSG)
-            echo '<p class="bg-success">Record updated successfully<p>';
+            echo '<p class="bg-success">Record updated successfully</p>';
     } else {
         if ($MSG)
             echo "Error: " . $sql . "<br>" . $conn->error;
@@ -69,4 +69,13 @@ function setUpdate($sql, $MSG) {
 }
 
 
+
+
+  function printNowTime() {
+                        date_default_timezone_set("Asia/Colombo");
+                        echo date("Y-m-d h:i:sa");
+                    }
+
+                    
+                    
 ?>

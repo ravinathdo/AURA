@@ -1,6 +1,4 @@
- <li class="first-list"><a class="active" href="home.php">Home</a></li>
-                                <li><a href="admin_add_item.php" class="scroll">Add Items</a></li>
-                                <li><a href="#services" class="scroll">Manage Items</a></li>
-                                <li><a href="#portfolio" class="scroll">Portfolio</a></li>
-                                <li><a href="#models" class="scroll">Models</a></li>
-                                <li><a href="#mail" class="scroll">Contact</a></li>
+<li class="first-list"><a class="active" href="home.php">Home</a></li>
+<li><a href="customer_sales.php" >My Purchase</a></li>
+<li><a href="customer_item_search.php" >Buy Now</a></li>
+<li><a href="user_order_list.php" >My Orders</a></li>

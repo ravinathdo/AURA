@@ -1,4 +1,4 @@
-<?php session_start();?>
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -62,7 +62,13 @@
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav">
-                              <?php include './_menu_admin.php';?>
+                                <?php
+                                if ($_SESSION['ssn_user']['role'] == 'CUSTOMER') {
+                                    include './_menu_customer.php';
+                                } else if ($_SESSION['ssn_user']['role'] == 'ADMIN') {
+                                    include './_menu_admin.php';
+                                }
+                                ?>
                             </ul>	
                             <div class="clearfix"> </div>
                         </div>	
@@ -70,10 +76,7 @@
                 </div>
                 <div class="agileinfo-social-grids">
                     <ul>
-                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa fa-rss"></i></a></li>
-                        <li><a href="#"><i class="fa fa-vk"></i></a></li>
+                      <?php include './_right.php'; ?>
                     </ul>
                 </div>
                 <div class="clearfix"> </div>
@@ -82,7 +85,7 @@
 
 
             </div>
-            
+
         </div>
         <!-- //banner -->
 
@@ -90,14 +93,135 @@
 
         <div class="container">
             <div class="row">
-                <div class="col-md-8">.col-md-8</div>
-                <div class="col-md-4">.col-md-4</div>
+                <div class="col-md-8">
+                    <h2>Manage Items</h2>
+                    <form class="form-horizontal" action="admin_add_item.php"  method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Item Name</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="item_name" required="" class="form-control" id="inputEmail3" placeholder="Item Name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword3" required="" class="col-sm-2 control-label">Category</label>
+                            <div class="col-sm-10">
+                                <select name="category" class="form-control">
+                                    <option>--select category--</option>
+                                    <option value="SHIRT">SHIRT</option>
+                                    <option value="T-SHIRT">T-SHIRT</option>
+                                    <option value="FROCK">FROCK</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">price</label>
+                            <div class="col-sm-10">
+                                <input type="number" name="price" required="" class="form-control" id="inputEmail3" placeholder="Item Name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Quantity</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="available_qty" required=""  class="form-control" id="inputEmail3" placeholder="Item Name">
+                            </div>
+                        </div>
+                       
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Image</label>
+                            <div class="col-sm-10">
+                                <input type="file" name="fileToUpload" required="" class="form-control" >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label"></label>
+                            <div class="col-sm-10">
+                                <button type="submit" name="btnAdd" class="btn btn-warning">Add Item</button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="col-md-4">
+
+                    <?php
+                    if (isset($_POST['btnAdd'])) {
+
+                        $target_dir = "uploads/";
+                        $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+                        $uploadOk = 1;
+                        $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
+// Check if image file is a actual image or fake image
+                        if (isset($_POST["btnAdd"])) {
+                            $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+                            if ($check !== false) {
+                                //echo "File is an image - " . $check["mime"] . ".";
+                                echo '<p></p>';
+                                $uploadOk = 1;
+                            } else {
+                                echo "File is not an image.";
+                                $uploadOk = 0;
+                            }
+                        }
+// Check if file already exists
+                        if (file_exists($target_file)) {
+                            echo "Sorry, file already exists.";
+                            $uploadOk = 0;
+                        }
+// Check file size
+                        if ($_FILES["fileToUpload"]["size"] > 500000) {
+                            echo "Sorry, your file is too large.";
+                            $uploadOk = 0;
+                        }
+// Allow certain file formats
+                        if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+                            echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+                            $uploadOk = 0;
+                        }
+// Check if $uploadOk is set to 0 by an error
+                        if ($uploadOk == 0) {
+                            echo "Sorry, your file was not uploaded.";
+// if everything is ok, try to upload file
+                        } else {
+                            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+                                echo '<p class="bg-success">The Item has been uploaded.</p>';
+                                $fileName = basename($_FILES["fileToUpload"]["name"]);
+                                //ready to insert data into database and preview
+
+                                include './DB.php';
+                                $sql = " INSERT INTO `aura_item`
+            (`item_name`,
+             `category`,
+             `price`,
+             `available_qty`,
+             `status`,
+             `img_path`)
+VALUES ('" . $_POST['item_name'] . "',
+        '" . $_POST['category'] . "',
+        '" . $_POST['price'] . "',
+        '" . $_POST['available_qty'] . "',
+        'ACTIVE',
+        '" . $fileName . "'); ";
+
+                                setData($sql, FALSE);
+                                ?>
+                    
+                    <img src="uploads/<?= $fileName;?>" style="width: 100%" />
+
+                                <?php
+                            } else {
+                                echo "Sorry, there was an error uploading your file.";
+                            }
+                        }
+                    }//btnAdd
+                    ?>
+
+                </div>
             </div>
         </div>
-        
-        
-        
-        
+
+
+
+
         <!-- modal -->
         <div class="modal about-modal fade" id="myModal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
@@ -130,7 +254,7 @@
 
         <!-- footer -->
 
-        <?php include './_footer.php';?>
+<?php include './_footer.php'; ?>
         <!-- //footer -->
 
         <script src="js/responsiveslides.min.js"></script>

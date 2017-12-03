@@ -1,4 +1,4 @@
-<?php session_start();?>
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -62,11 +62,10 @@
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav">
-                                 <?php
-                                
-                                if($_SESSION['ssn_user']['role'] == 'CUSTOMER'){
+                                <?php
+                                if ($_SESSION['ssn_user']['role'] == 'CUSTOMER') {
                                     include './_menu_customer.php';
-                                }else  if($_SESSION['ssn_user']['role'] == 'ADMIN') {
+                                } else if ($_SESSION['ssn_user']['role'] == 'ADMIN') {
                                     include './_menu_admin.php';
                                 }
                                 ?>
@@ -89,22 +88,110 @@
 
 
             </div>
-            
+
         </div>
         <!-- //banner -->
 
 
 
         <div class="container">
+
+
+
             <div class="row">
-                <div class="col-md-8">.col-md-8</div>
-                <div class="col-md-4">.col-md-4</div>
+                <?php
+                include './DB.php';
+                if (isset($_POST['btnBuy'])) {
+                    //get the item 
+                    $qty = $_POST['qty'];
+                    $sql = "SELECT * FROM aura_item WHERE id = " . $_POST['id'];
+                    $resultx = getData($sql);
+                    ?>
+                    <form action="payment_item.php" method="post" >
+                        <div class="col-md-8">
+
+
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <?php
+                                    if ($resultx != FALSE) {
+                                        while ($row = mysqli_fetch_assoc($resultx)) {
+                                            ?>
+                                        <input type="hidden" name="id" value="<?= $row['id']; ?>" />
+                                        <tr>
+                                            <td>Item Name</td>
+                                            <td><?= $row['item_name']; ?></td>
+                                        <input type="hidden" name="item_name" value="<?= $row['item_name']; ?>" />
+
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td><img style="width: 200px" src="uploads/<?= $row['img_path']; ?>"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Category</td>
+                                            <td><?= $row['category']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>price</td>
+                                            <td><input type="number" name="price" value="<?= $row['price']; ?>" required="" readonly="" /> </td>
+                                        <input type="hidden" name="price" value="<?= $row['price']; ?>" />
+
+                                        </tr>
+                                        <tr>
+                                            <td>Purchase Qty</td>
+                                            <td><input type="number" name="qty" value="<?= $qty; ?>" required="" readonly="" /></td>
+                                        <input type="hidden" name="qty" value="<?= $qty; ?>" />
+
+                                        </tr>
+                                        <tr>
+                                            <td>Total Amount</td>
+                                            <td><input type="number" name="total" value="<?= $qty * $row['price']; ?>" required="" readonly="" /></td>
+                                        <input type="hidden" name="total" value="<?= $qty * $row['price']; ?>" />
+
+                                        </tr>
+
+                                        <?php
+                                    }
+                                }
+                                ?>
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <div class="col-md-4">
+                            <b><i class="fa fa-credit-card"></i>Card Information</b>
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td>Name On The Card</td>
+                                    <td><input type="text" required="" /></td>
+                                </tr>
+                                <tr>
+                                    <td>Card Number</td>
+                                    <td><input type="number" required="" /></td>
+                                </tr>
+                                <tr>
+                                    <td>CCV</td>
+                                    <td><input type="number" required=""  /></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><button type="submit" name="btnPay" class="btn btn-warning">Buy Item</button></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </form>
+                    <?php
+                }
+                ?>
+
             </div>
         </div>
-        
-        
-        
-        
+
+
+
+
         <!-- modal -->
         <div class="modal about-modal fade" id="myModal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
@@ -137,7 +224,7 @@
 
         <!-- footer -->
 
-        <?php include './_footer.php';?>
+        <?php include './_footer.php'; ?>
         <!-- //footer -->
 
         <script src="js/responsiveslides.min.js"></script>
