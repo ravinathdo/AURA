@@ -29,11 +29,11 @@ CREATE TABLE `aura_item` (
   `status` varchar(10) DEFAULT 'ACTIVE',
   `img_path` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 /*Data for the table `aura_item` */
 
-insert  into `aura_item`(`id`,`item_name`,`category`,`price`,`available_qty`,`status`,`img_path`) values (1,'Girls Frock','T-SHIRT','223333.00',111,'ACTIVE','124.jpg'),(2,'Women Silk Top','SHIRT','33445.00',0,'ACTIVE','124Z.jpg');
+insert  into `aura_item`(`id`,`item_name`,`category`,`price`,`available_qty`,`status`,`img_path`) values (1,'Girls Frock','T-SHIRT','223333.00',107,'ACTIVE','124.jpg'),(2,'Women Silk Top','SHIRT','33445.00',0,'ACTIVE','124Z.jpg'),(3,'Frock','FROCK','1499.00',34,'ACTIVE','Kalla.jpg');
 
 /*Table structure for table `aura_order` */
 
@@ -47,11 +47,11 @@ CREATE TABLE `aura_order` (
   `status` varchar(10) DEFAULT NULL,
   `ordertime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 /*Data for the table `aura_order` */
 
-insert  into `aura_order`(`id`,`itemid`,`userid`,`order_qty`,`status`,`ordertime`) values (1,2,3,2,'APPROVED','2017-12-02 18:33:57'),(2,2,3,2,'APPROVED','2017-12-02 18:36:00');
+insert  into `aura_order`(`id`,`itemid`,`userid`,`order_qty`,`status`,`ordertime`) values (1,2,3,2,'APPROVED','2017-12-02 18:33:57'),(2,2,3,2,'APPROVED','2017-12-02 18:36:00'),(3,2,3,2,'APPROVED','2017-12-03 22:23:07'),(4,2,3,4,'PENDING','2017-12-03 22:36:24');
 
 /*Table structure for table `aura_sales` */
 
@@ -67,11 +67,11 @@ CREATE TABLE `aura_sales` (
   `createdtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `orderid` int(5) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 /*Data for the table `aura_sales` */
 
-insert  into `aura_sales`(`id`,`userid`,`itemid`,`qty`,`item_price`,`total`,`createdtime`,`orderid`) values (1,1,2,4,'33445.00','133780.00','2017-12-02 16:43:39',NULL),(2,3,1,111,'223333.00','24789963.00','2017-12-03 21:05:44',NULL),(3,3,1,111,'223333.00','24789963.00','2017-12-03 21:05:46',NULL);
+insert  into `aura_sales`(`id`,`userid`,`itemid`,`qty`,`item_price`,`total`,`createdtime`,`orderid`) values (1,1,2,4,'33445.00','133780.00','2017-12-02 16:43:39',NULL),(2,3,1,111,'223333.00','24789963.00','2017-12-03 21:05:44',NULL),(3,3,1,111,'223333.00','24789963.00','2017-12-03 21:05:46',NULL),(4,3,1,3,'111.00','669999.00','2017-12-03 22:22:45',NULL),(5,3,1,3,'111.00','669999.00','2017-12-03 22:22:47',NULL),(6,3,1,2,'223333.00','446666.00','2017-12-03 22:24:32',NULL),(7,3,1,2,'223333.00','446666.00','2017-12-03 22:24:33',NULL),(8,3,1,2,'223333.00','446666.00','2017-12-03 22:26:05',NULL),(9,3,1,2,'223333.00','446666.00','2017-12-03 22:36:03',NULL);
 
 /*Table structure for table `aura_user` */
 
